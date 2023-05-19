@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Improve Text</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			padding: 20px;
+		}
+		h2 {
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+		select, button {
+			padding: 8px;
+			font-size: 1em;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			background-color: #fff;
+			margin-bottom: 16px;
+		}
+		button {
+			background-color: #4CAF50;
+			color: #fff;
+			cursor: pointer;
+			transition: background-color 0.3s ease-in-out;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+<body>
+  <h2><b>To get started, select a text</b></h2>
+  <p>Click on a text layer or a frame with text.</p>
+
+	<h2><b>What do you want to do?</b></h2>
+	<select name="action" id="text-action" >
+		<option value="Fix spelling and grammar">Fix spelling and grammar</option>
+		<option value="Make shorter">Make shorter</option>
+		<option value="Make longer">Make longer</option>
+    <option value="Make formal">Make formal</option>
+    <option value="Make informal">Make informal</option>
+	</select>
+	<br>
+	<h2><b>How do you want to display result?</b></h2>
+	<select name="display" id="text-display" >
+		<option value="Replace text">Replace text</option>
+		<option value="Paste outside text">Paste outside text</option>
+	</select>
+	<br>
+	<p>The improved writing will replace the selected text.</p>
+	<button type="submit" id="improve-text" >Improve Selected Text</button>
+
+	<script>
+		document.getElementById('improve-text').onclick = () => {
+			const textAction = document.getElementById('text-action').value;
+			const textDisplay = document.getElementById('text-display').value;
+			parent.postMessage({ pluginMessage: { type: 'get-selected-text', textAction, textDisplay} },'*');
+		}
+	</script>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
