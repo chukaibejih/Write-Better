@@ -1,4 +1,4 @@
-Improve Text Figma Plugin
+Improve Text Figma Plugin (Work In Progress)
 =========================
 
 The Improve Text Figma Plugin allows you to enhance and modify text within your Figma designs. With this plugin, you can fix spelling and grammar errors, make the text shorter or longer, and adjust the formality of the language. You can choose to replace the existing text or paste the improved text outside the selected frame.
