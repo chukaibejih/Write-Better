@@ -1,3 +1,5 @@
+
+
 // This file holds the main code for the plugins. It has access to the *document*.
 // You can access browser APIs in the <script> tag inside "ui.html" which has a
 // full browser environment (see documentation).
@@ -14,9 +16,6 @@ figma.ui.onmessage = async (msg) => {
     const selectedText = figma.currentPage.selection;
     const textAction = msg.textAction;
     const textDisplay = msg.textDisplay;
-    console.log('Text action:', msg.textAction);
-    console.log('Text display:', msg.textDisplay);
-    console.log('Selected text:', selectedText);
 
     // Checking selection
     if (!selectedText || selectedText.length === 0) {
@@ -27,9 +26,8 @@ figma.ui.onmessage = async (msg) => {
     for (let layer of selectedText) {
       if (layer.type === 'TEXT') {
         const textLayer = layer as TextNode; // Explicitly type as TextNode
-        console.log(textLayer)
         const text = textLayer.characters;
-        const apiKey = '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';
+        const apiKey = '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';
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
         const requestOptions = {
@@ -51,10 +49,18 @@ figma.ui.onmessage = async (msg) => {
           const generatedText = data.choices[0].message.content;
           console.log('Generated text:', generatedText);
 
-          if (textDisplay === 'Replace Text') {
+          if (textDisplay === 'Replace text') {
             await figma.loadFontAsync(textLayer.fontName as FontName);
-            textLayer.characters = generatedText;
-            figma.closePlugin();
+            const newTextLayer = figma.createText();
+            newTextLayer.fontName = textLayer.fontName;
+            newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.x = textLayer.x;
+            newTextLayer.y = textLayer.y;
+            newTextLayer.characters = generatedText;
+            if (textLayer.parent) {
+              textLayer.parent.insertChild(textLayer.parent.children.indexOf(textLayer), newTextLayer);
+              textLayer.remove();
+            }
           } else {
             const newTextLayer = figma.createText();
             await figma.loadFontAsync(textLayer.fontName as FontName);
@@ -65,13 +71,14 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.y = textLayer.y + textLayer.height + 20; // Adjust the position of the pasted text as needed
             figma.currentPage.appendChild(newTextLayer);
             figma.currentPage.selection = [newTextLayer];
-            figma.closePlugin();
           }
         } catch (error) {
           console.error('Error:', error);
         }
       }
     }
+
+    figma.closePlugin();
   }
 };
 
