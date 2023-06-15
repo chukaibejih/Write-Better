@@ -1,40 +1,66 @@
-Below are the steps to get your plugin running. You can also find instructions at:
+Improve Text Figma Plugin (Work In Progress)
+=========================
 
-  https://www.figma.com/plugin-docs/plugin-quickstart/
+The Improve Text Figma Plugin allows you to enhance and modify text within your Figma designs. With this plugin, you can fix spelling and grammar errors, make the text shorter or longer, and adjust the formality of the language. You can choose to replace the existing text or paste the improved text outside the selected frame.
 
-This plugin template uses Typescript and NPM, two standard tools in creating JavaScript applications.
+Installation
+------------
 
-First, download Node.js which comes with NPM. This will allow you to install TypeScript and other
-libraries. You can find the download link here:
+1.  Open your Figma desktop app.
+2.  Go to the "Plugins" tab in the left sidebar.
+3.  Click on "Create your own plugin" at the bottom.
+4.  In the plugin editor, replace the default code with the provided `code.ts` file.
+5.  Save the changes.
 
-  https://nodejs.org/en/download/
+Usage
+-----
 
-Next, install TypeScript using the command:
+1.  Select a text layer or a frame containing text in your Figma document.
+2.  Open the "Plugins" menu.
+3.  Choose the "Improve Text" plugin.
+4.  The plugin UI will appear, showing the available options.
+5.  Select the desired text modification action from the dropdown menu.
+6.  Choose how you want the improved text to be displayed (replace the existing text or paste it outside the selected frame).
+7.  Click the "Improve Selected Text" button to initiate the text improvement process.
 
-  npm install -g typescript
+Customization
+-------------
 
-Finally, in the directory of your plugin, get the latest type definitions for the plugin API by running:
+If you wish to modify the plugin's functionality, you can make changes to the `code.ts` file. Here are a few things you can customize:
 
-  npm install --save-dev @figma/plugin-typings
+-   API Key: To use the OpenAI language model, you'll need an API key. Replace the `apiKey` variable in the code with your own key.
+-   Model Configuration: Adjust the model settings according to your preferences. You can modify the temperature value to control the level of randomness in the generated text.
+-   UI Styling: If you want to change the appearance of the plugin UI, you can edit the `ui.html` file. It uses basic HTML and CSS, so you can customize the styles and layout as desired.
 
-If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
-is already valid Typescript code.
+License
+-------
 
-TypeScript adds type annotations to variables. This allows code editors such as Visual Studio Code
-to provide information about the Figma API while you are writing code, as well as help catch bugs
-you previously didn't notice.
+This plugin is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-For more information, visit https://www.typescriptlang.org/
+Limitations
+-------
 
-Using TypeScript requires a compiler to convert TypeScript (code.ts) into JavaScript (code.js)
-for the browser to run.
+This plugin is still under development, so there are some limitations. For example, it can only improve text in English. It also cannot improve text that is formatted in a table or on a timeline.
 
-We recommend writing TypeScript code using Visual Studio code:
+Support
+-------
 
-1. Download Visual Studio Code if you haven't already: https://code.visualstudio.com/.
-2. Open this directory in Visual Studio Code.
-3. Compile TypeScript to JavaScript: Run the "Terminal > Run Build Task..." menu item,
-    then select "npm: watch". You will have to do this again every time
-    you reopen Visual Studio Code.
+If you encounter any issues or have suggestions for improvement, please [submit an issue](https://github.com/your-plugin-repo/issues) on the GitHub repository.
 
-That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+Acknowledgements
+----------------
+
+This plugin utilizes the power of the OpenAI GPT-3.5 Turbo language model. Special thanks to the OpenAI team for their work.
+
+Contributing
+------------
+
+Contributions are welcome! If you have any enhancements or bug fixes, feel free to open a pull request on the GitHub repository.
+
+
+Related Links
+-------------
+
+-   [Figma Developer Documentation](https://www.figma.com/plugin-docs/intro/)
+-   [OpenAI API Documentation](https://platform.openai.com/docs/)
+-   [Figma Plugin Community](https://www.figma.com/community/plugins/)
