@@ -51,7 +51,6 @@ figma.ui.onmessage = async (msg) => {
           const response = await fetch(apiUrl, requestOptions);
           const data = await response.json();
           const generatedText = data.choices[0].message.content;
-          console.log('Generated text:', generatedText);
 
           if (textDisplay === 'Replace text') {
             textLayer.characters = generatedText; // Replace the selected text
@@ -64,7 +63,7 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
             newTextLayer.textAutoResize = textLayer.textAutoResize;
             newTextLayer.x = textLayer.x;
-            newTextLayer.y = textLayer.y;
+            newTextLayer.y = textLayer.y + textLayer.height + 20; // Adjust the y coordinate to add spacing below the selected text
             newTextLayer.resize(textLayer.width, textLayer.height);
 
             if (layer.parent) {
