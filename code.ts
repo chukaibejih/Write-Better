@@ -1,5 +1,4 @@
 
-
 // This file holds the main code for the plugins. It has access to the *document*.
 // You can access browser APIs in the <script> tag inside "ui.html" which has a
 // full browser environment (see documentation).
@@ -27,59 +26,62 @@ figma.ui.onmessage = async (msg) => {
       if (layer.type === 'TEXT') {
         const textLayer = layer as TextNode; // Explicitly type as TextNode
         const text = textLayer.characters;
-        const apiKey = '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';
-        const apiUrl = 'https://api.openai.com/v1/chat/completions';
-
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: `Perform this action '${textAction}' on this text '${text}'` }],
-            temperature: 0.7,
-          }),
-        };
 
         try {
+          await figma.loadFontAsync(textLayer.fontName as FontName);
+
+          let newTextLayer: TextNode;
+
+          const apiKey = '';
+          const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model: 'gpt-3.5-turbo',
+              messages: [{ role: 'user', content: `Perform this action '${textAction}' on this text '${text}'` }],
+              temperature: 0.7,
+            }),
+          };
+
           const response = await fetch(apiUrl, requestOptions);
           const data = await response.json();
           const generatedText = data.choices[0].message.content;
           console.log('Generated text:', generatedText);
 
           if (textDisplay === 'Replace text') {
-            await figma.loadFontAsync(textLayer.fontName as FontName);
-            const newTextLayer = figma.createText();
+            textLayer.characters = generatedText; // Replace the selected text
+          } else {
+            newTextLayer = figma.createText(); // Create a new text layer
+            newTextLayer.characters = generatedText;
             newTextLayer.fontName = textLayer.fontName;
             newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
+            newTextLayer.textAlignVertical = textLayer.textAlignVertical;
+            newTextLayer.textAutoResize = textLayer.textAutoResize;
             newTextLayer.x = textLayer.x;
             newTextLayer.y = textLayer.y;
-            newTextLayer.characters = generatedText;
-            if (textLayer.parent) {
-              textLayer.parent.insertChild(textLayer.parent.children.indexOf(textLayer), newTextLayer);
-              textLayer.remove();
+            newTextLayer.resize(textLayer.width, textLayer.height);
+
+            if (layer.parent) {
+              layer.parent.appendChild(newTextLayer); // Append the new text layer outside the selected text
+            } else {
+              figma.currentPage.appendChild(newTextLayer); // Fallback to appending to the current page if parent is null
             }
-          } else {
-            const newTextLayer = figma.createText();
-            await figma.loadFontAsync(textLayer.fontName as FontName);
-            newTextLayer.characters = generatedText.replace(/\n/g, '\u000A');
-            newTextLayer.fontName = textLayer.fontName;
-            newTextLayer.fontSize = textLayer.fontSize;
-            newTextLayer.x = textLayer.x;
-            newTextLayer.y = textLayer.y + textLayer.height + 20; // Adjust the position of the pasted text as needed
-            figma.currentPage.appendChild(newTextLayer);
-            figma.currentPage.selection = [newTextLayer];
           }
         } catch (error) {
           console.error('Error:', error);
+          figma.closePlugin('An error occurred');
         }
       }
     }
-
-    figma.closePlugin();
   }
 };
+
+
 
 
