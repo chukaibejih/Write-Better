@@ -47,13 +47,37 @@ figma.ui.onmessage = async (msg) => {
               temperature: 0.7,
             }),
           };
+          
 
           const response = await fetch(apiUrl, requestOptions);
           const data = await response.json();
-          const generatedText = data.choices[0].message.content;
+          let generatedText = data.choices[0].message.content;
+          console.log('Generated Text:', generatedText)
+
+          // Remove known prefixes from generated text
+          const prefixesToRemove = ['Shortened text: ', 'Revised text: ', '"'];
+          for (const prefix of prefixesToRemove) {
+            if (generatedText.startsWith(prefix)) {
+              generatedText = generatedText.replace(prefix, '');
+              break;
+            }
+          }
 
           if (textDisplay === 'Replace text') {
-            textLayer.characters = generatedText; // Replace the selected text
+            newTextLayer = figma.createText();
+            newTextLayer.characters = generatedText;
+            newTextLayer.fontName = textLayer.fontName;
+            newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
+            newTextLayer.textAlignVertical = textLayer.textAlignVertical;
+            newTextLayer.textAutoResize = textLayer.textAutoResize;
+            newTextLayer.x = textLayer.x;
+            newTextLayer.y = textLayer.y;
+            newTextLayer.resize(textLayer.width, textLayer.height);
+            if (textLayer.parent) {
+              textLayer.parent.insertChild(textLayer.parent.children.indexOf(textLayer), newTextLayer);
+              textLayer.remove();
+            }
           } else {
             newTextLayer = figma.createText(); // Create a new text layer
             newTextLayer.characters = generatedText;
@@ -77,6 +101,7 @@ figma.ui.onmessage = async (msg) => {
           figma.closePlugin('An error occurred');
         }
       }
+      figma.closePlugin();
     }
   }
 };
