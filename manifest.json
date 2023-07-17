@@ -1,6 +1,6 @@
 {
-  "name": "Plugin Boilerplate",
-  "id": "paste-your-plugin-id-here",
+  "name": "Write Better",
+  "id": "1230428211642804104",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui.html",

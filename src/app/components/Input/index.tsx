@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.module.scss";
+
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -17,11 +17,10 @@ const Input: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={`${styles.wrap} ${props.className}`}>
-      <label className={styles.label}>{props.label}</label>
+    <div >
+      <label >{props.label}</label>
       <input
         {...props}
-        className={styles.input}
         value={value}
         onChange={handleChange}
       />

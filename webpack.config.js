@@ -20,7 +20,10 @@ module.exports = (env, argv) => ({
     ui: "./src/app/index.tsx", // The entry point for your UI code
     code: "./src/controller/index.ts", // The entry point for your plugin code
   },
-
+  target: "web",
+  devServer: {
+    port: "5000",
+  },
   // Define the rules for how different types of files should be handled
   module: {
     rules: [
@@ -35,8 +38,23 @@ module.exports = (env, argv) => ({
 
       // Process SASS/SCSS files and extract the CSS into a separate file
       {
-        test: /\.(sass|scss)$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  // Add your PostCSS plugins here
+                  require("autoprefixer"),
+                  // other plugins...
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },

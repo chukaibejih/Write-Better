@@ -1,0 +1,10 @@
+export {default as LogoIcon} from './LogoIcon';
+export {default as CancelIcon} from './CancelIcon';
+export {default as TextIcon} from './TextIcon';
+export {default as StarIcon} from './StarIcon';
+export {default as DropdownIcon} from './DropdownIcon';
+export {default as CorrectIcon} from './CorrectGrammarIcon'
+export {default as LongerTextIcon} from './LongerTextIcon'
+export {default as ShorterTextIcon} from './ShorterTextIcon'
+export {default as FormalToneIcon} from './FormalToneIcon'
+export {default as InformalToneIcon} from './InformalToneIcon'

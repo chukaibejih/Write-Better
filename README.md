@@ -1,85 +1,66 @@
-# 🎨 React Boilerplate for Figma plugins ⚛️
+Improve Text Figma Plugin (Work In Progress)
+=========================
 
-![preview](https://user-images.githubusercontent.com/18498712/222872587-28fb60ea-9282-48f4-8984-3e80a4b1b140.jpeg)
+The Improve Text Figma Plugin allows you to enhance and modify text within your Figma designs. With this plugin, you can fix spelling and grammar errors, make the text shorter or longer, and adjust the formality of the language. You can choose to replace the existing text or paste the improved text outside the selected frame.
 
-## ❓ What is this?
+Installation
+------------
 
-This is a boilerplate for creating a Figma plugin using React and Typescript.
+1.  Open your Figma desktop app.
+2.  Go to the "Plugins" tab in the left sidebar.
+3.  Click on "Create your own plugin" at the bottom.
+4.  In the plugin editor, replace the default code with the provided `code.ts` file.
+5.  Save the changes.
 
----
+Usage
+-----
 
-## Supports
+1.  Select a text layer or a frame containing text in your Figma document.
+2.  Open the "Plugins" menu.
+3.  Choose the "Improve Text" plugin.
+4.  The plugin UI will appear, showing the available options.
+5.  Select the desired text modification action from the dropdown menu.
+6.  Choose how you want the improved text to be displayed (replace the existing text or paste it outside the selected frame).
+7.  Click the "Improve Selected Text" button to initiate the text improvement process.
 
-- SASS (SCSS)
-- CSS/SASS/SCSS Modules
-- Typescript
-- Import SVG images
+Customization
+-------------
 
----
+If you wish to modify the plugin's functionality, you can make changes to the `code.ts` file. Here are a few things you can customize:
 
-## 📦 Latest packages versions
+-   API Key: To use the OpenAI language model, you'll need an API key. Replace the `apiKey` variable in the code with your own key.
+-   Model Configuration: Adjust the model settings according to your preferences. You can modify the temperature value to control the level of randomness in the generated text.
+-   UI Styling: If you want to change the appearance of the plugin UI, you can edit the `ui.html` file. It uses basic HTML and CSS, so you can customize the styles and layout as desired.
 
-- `@figma/plugin-typings`: 1.68.0
-- `react`: 18.2.0
+License
+-------
 
----
+This plugin is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-## Structure
+Limitations
+-------
 
-```
-├── src
-│   ├── app
-│   │   ├── assets
-│   │   ├── components
-│   │   ├── styles
-│   ├── controller
-│   ├── App.tsx
-│   ├── index.tsx
-│   ├── index.html
-├── manifest.json
-├── .prettierrc.yml
-├── declaration.d.ts
-├── tsconfig.json
-├── webpack.config.js
-```
+This plugin is still under development, so there are some limitations. For example, it can only improve text in English. It also cannot improve text that is formatted in a table or on a timeline.
 
-### src/app
+Support
+-------
 
-This is where the main app is located. It is a React app that is rendered inside the Figma plugin.
+If you encounter any issues or have suggestions for improvement, please [submit an issue](https://github.com/your-plugin-repo/issues) on the GitHub repository.
 
-### src/controller
+Acknowledgements
+----------------
 
-This is where the Figma controller is located. It is a Typescript file that is used to communicate with the Figma API.
+This plugin utilizes the power of the OpenAI GPT-3.5 Turbo language model. Special thanks to the OpenAI team for their work.
+
+Contributing
+------------
+
+Contributions are welcome! If you have any enhancements or bug fixes, feel free to open a pull request on the GitHub repository.
 
 
----
+Related Links
+-------------
 
-## 🛠️ How to use
-
-1. Clone this repo
-2. Run `yarn` or `npm install`
-3. Run `yarn dev` or `npm run dev`
-4. Go to Figma and add a new plugin (Plugins -> Development -> Import plugin from manifest…)
-5. Run the plugin
-
----
-   
-## ⚙️ How to run
-
-In the project directory, you can run:
-- `yarn dev` or `npm run dev` to run the app in the development mode.
-- `yarn build` or `npm run build` to build the app for production to the `build` folder.
-
----
-
-## ❗ Important
-
-- run `yarn build` or `npm run build` before publishing the plugin to Figma. This will optimize the code and remove unnecessary files.
-- You'll need to restart plugin in Figma in order to see the changes during development.
-- Do not forget to replace the name and id of the plugin in the `manifest.json` file before publication.
-
----
- 
-## 📣 Feedback
-
-If you have any feedback, please reach out to me here in issues, or on [Twitter](https://twitter.com/PaveILaptev).
+-   [Figma Developer Documentation](https://www.figma.com/plugin-docs/intro/)
+-   [OpenAI API Documentation](https://platform.openai.com/docs/)
+-   [Figma Plugin Community](https://www.figma.com/community/plugins/)

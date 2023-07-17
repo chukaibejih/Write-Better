@@ -1,45 +1,64 @@
 import * as React from "react";
-import styles from "./app.module.scss";
+//import { CancelIcon, LogoIcon} from "./components/icons"
+import { Selector, Editor } from "./components";
 
-import logoImg from "./assets/logo.svg";
-import Input from "./components/Input";
-import Button from "./components/Button";
 
 const App = () => {
-  const [oultineValue, setOutlineValue] = React.useState("4");
+  const [selectedText, setSelectedText] = React.useState<string>("");
+  //const [loading, setLoading] = React.useState<string>("")
+  
+  //onload send msg to figma to  track selection
+  React.useEffect(() => {
+      if (!selectedText) {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "selected",
+              value: selectedText,
+            },
+          },
+          "*"
+        );
+      } else {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "",
+              value: "",
+            },
+          },
+          "*"
+        );
+      }
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOutlineValue(e.target.value);
-  };
+  }, [selectedText])
 
-  const handleClick = () => {
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: "add-outline",
-          value: oultineValue,
-        },
-      },
-      "*"
-    );
-  };
+    
+  React.useEffect(() => {
+    onmessage = (event) => {
+      setSelectedText(event.data.pluginMessage.pluginMessage.type);
+    };
+  }, [selectedText])
+  
+
+
 
   return (
-    <section className={styles.wrap}>
-      <img src={logoImg} className={styles.logo} />
-      <h1 className={styles.title}>Figma React Boilerplate</h1>
-      <p className={styles.description}>
-        Select any element on the page and add an outline. This action will show
-        you how the plugin and Figma API connect to each other.
-      </p>
-      <Input
-        className={styles.input}
-        label="Outline width (px)"
-        type="number"
-        value={oultineValue}
-        onChange={handleInput}
-      />
-      <Button label="Add outline" onClick={handleClick} />
+    <section className="flex items-center justify-center font-inter bg-bgLight min-h-screen w-full">
+      <div className="flex flex-col items-center bg-white w-full max-w-[390px] min-h-[410px]">
+    {/*<div className='flex items-center justify-between w-full py-4 px-6 border-b border-[#f0eded]'>
+      <div className="flex items-center gap-[9px] cursor-pointer">
+        <LogoIcon />
+        <p className="text-textDark font-semibold text-[10px]">AI Writing Assistant</p>
+      </div>       
+      <CancelIcon />
+  </div>*/}
+    {!selectedText ? (
+      <Selector />
+    ) :  (
+      <Editor />
+    )}
+  </div>
     </section>
   );
 };
