@@ -22,7 +22,10 @@ figma.showUI(__html__, pluginFrameSize);
 
 // Listen for the "improve-text" event from the UI and retrieve the selected text
 figma.ui.onmessage = async (msg) => {
-   
+  const selectedText = figma.currentPage.selection;
+  const textAction = msg.textAction;
+  const textDisplay = msg.textDisplay;
+
   figma.on("selectionchange", () => {
     if (msg.type === 'selected') {
       figma.ui.postMessage({
@@ -40,15 +43,28 @@ figma.ui.onmessage = async (msg) => {
   });
 
 
+ 
+
+  //toggle text box selection
+  if (selectedText && selectedText.length > 0) {
+    figma.ui.postMessage({
+      pluginMessage: {
+        type: "text-highlighted",
+      },
+    }); 
+  } else {
+    figma.ui.postMessage({
+      pluginMessage: {
+        type: "",
+      },
+    });
+  }
+
 
   if (msg.type === 'get-selected-text') {
 
-    const selectedText = figma.currentPage.selection;
-    const textAction = msg.textAction;
-    const textDisplay = msg.textDisplay;
-
-
     if (selectedText && selectedText.length > 0) {
+    
           // Post a message to the parent window with the selected text status
           figma.ui.postMessage({
             pluginMessage: {
@@ -57,6 +73,7 @@ figma.ui.onmessage = async (msg) => {
             },
           });
     } else {
+
       figma.closePlugin('Select at least one frame');
       figma.ui.postMessage("")
       return;
@@ -74,7 +91,7 @@ figma.ui.onmessage = async (msg) => {
 
           let newTextLayer: TextNode;
 
-          const apiKey = `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`;
+          const apiKey = ``;
           const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
           const requestOptions = {
