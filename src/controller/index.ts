@@ -30,7 +30,7 @@ figma.ui.onmessage = async (msg) => {
     if (msg.type === 'selected') {
       figma.ui.postMessage({
         pluginMessage: {
-          type: "text-highlighted",
+          type: "text-highlight",
         },
       });
     } else {
@@ -43,10 +43,9 @@ figma.ui.onmessage = async (msg) => {
   });
 
 
- 
-
-  //toggle text box selection
-  if (selectedText && selectedText.length > 0) {
+  for (let layer of selectedText) {
+    //toggle text box selection
+  if (selectedText && selectedText.length > 0 && layer.type === 'TEXT') {
     figma.ui.postMessage({
       pluginMessage: {
         type: "text-highlighted",
@@ -59,6 +58,10 @@ figma.ui.onmessage = async (msg) => {
       },
     });
   }
+  }
+ 
+
+  
 
 
   if (msg.type === 'get-selected-text') {

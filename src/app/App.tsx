@@ -53,10 +53,10 @@ const App = () => {
       </div>       
       <CancelIcon />
   </div>*/}
-    {!selectedText ? (
-      <Selector />
+    {selectedText === "text-highlighted" ? (
+       <Editor />
     ) :  (
-      <Editor />
+      <Selector />
     )}
   </div>
     </section>

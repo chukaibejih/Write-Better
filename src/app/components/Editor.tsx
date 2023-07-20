@@ -36,7 +36,7 @@ const Editor = () => {
           
             <p className='text-xs text-left text-textDark'>What do you want to do?</p>
             <div className="relative flex items-center justify-between px-4 py-3 w-full border border-[#e1dfec] cursor-pointer" onClick={() => setOpenDropdown(prevState => !prevState)}>
-                <span className="text-sm text-left text-textDark cursor-pointer">{textAction}</span>
+                <span className="text-xs text-left text-textDark cursor-pointer">{textAction}</span>
                 <DropdownIcon />
                 
                 <Dropdown 
@@ -47,7 +47,7 @@ const Editor = () => {
         </div>
 
         <div className="flex items-center justify-between gap-8 w-full px-4 py-3 border border-[#e1dfec]">
-          <div className="flex flex-col items-start justify-start gap-3">
+          <div className="flex flex-col items-start justify-start gap-2">
             <p className="text-xs text-left text-textDark">Replace Text</p>
             <p className="text-[10px] text-left text-textLight">The text output will paste in place and replace the selected text.</p>
           </div>
