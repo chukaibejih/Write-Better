@@ -6,8 +6,7 @@ console.clear();
 
 
 //api key
-//const OpenAiAPIKey = process.env.REACT_APP_OPENAI_API_KEY
-
+const OpenAiAPIKey = process.env.REACT_APP_OPENAI_API_KEY
 
 // default plugin size
 const pluginFrameSize = {
@@ -94,7 +93,7 @@ figma.ui.onmessage = async (msg) => {
 
           let newTextLayer: TextNode;
 
-          const apiKey = ``;
+          const apiKey = `${OpenAiAPIKey}`;
           const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
           const requestOptions = {

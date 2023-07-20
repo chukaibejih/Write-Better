@@ -1,4 +1,5 @@
 // Require the necessary packages
+const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -89,5 +90,10 @@ module.exports = (env, argv) => ({
 
     // Inline the CSS into the HTML file
     new HTMLInlineCSSWebpackPlugin(),
+
+    //environment variable
+    new Dotenv({
+      path: `./.env${env.file ? `.${env.file}` : ""}`,
+    }),
   ],
 });
