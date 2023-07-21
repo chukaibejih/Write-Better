@@ -64,22 +64,13 @@ figma.ui.onmessage = async (msg) => {
 
 
   if (msg.type === 'get-selected-text') {
-
-    if (selectedText && selectedText.length > 0) {
     
-          // Post a message to the parent window with the selected text status
-          figma.ui.postMessage({
-            pluginMessage: {
-              type: "selected-text",
-              selectedText: selectedText.length > 0,
-            },
-          });
-    } else {
-
+    //abort process if no text node is selected
+    if (!selectedText && selectedText.length <= 0) {
       figma.closePlugin('Select at least one frame');
       figma.ui.postMessage("")
       return;
-    }
+    } 
 
     
 
