@@ -1,12 +1,8 @@
-
-
-
 // clear console on reload
 console.clear();
 
-
-//api key
-const OpenAiAPIKey = process.env.REACT_APP_OPENAI_API_KEY
+// api key
+const OpenAiAPIKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 // default plugin size
 const pluginFrameSize = {
@@ -17,10 +13,10 @@ const pluginFrameSize = {
 // show plugin UI
 figma.showUI(__html__, pluginFrameSize);
 
-
-
 // Listen for the "improve-text" event from the UI and retrieve the selected text
 figma.ui.onmessage = async (msg) => {
+
+  
   const selectedText = figma.currentPage.selection;
   const textAction = msg.textAction;
   const textDisplay = msg.textDisplay;
@@ -41,38 +37,31 @@ figma.ui.onmessage = async (msg) => {
     }
   });
 
-
   for (let layer of selectedText) {
-    //toggle text box selection
-  if (selectedText && selectedText.length > 0 && layer.type === 'TEXT') {
-    figma.ui.postMessage({
-      pluginMessage: {
-        type: "text-highlighted",
-      },
-    }); 
-  } else {
-    figma.ui.postMessage({
-      pluginMessage: {
-        type: "",
-      },
-    });
+    // toggle text box selection
+    if (selectedText && selectedText.length > 0 && layer.type === 'TEXT') {
+      figma.ui.postMessage({
+        pluginMessage: {
+          type: "text-highlighted",
+        },
+      });
+    } else {
+      figma.ui.postMessage({
+        pluginMessage: {
+          type: "",
+        },
+      });
+    }
   }
-  }
- 
-
-  
-
 
   if (msg.type === 'get-selected-text') {
-    
-    //abort process if no text node is selected
-    if (!selectedText && selectedText.length <= 0) {
-      figma.closePlugin('Select at least one frame');
-      figma.ui.postMessage("")
-      return;
-    } 
 
-    
+    // abort process if no text node is selected
+    if (!selectedText || selectedText.length <= 0) {
+      figma.closePlugin('Select at least one frame');
+      figma.ui.postMessage("");
+      return;
+    }
 
     for (let layer of selectedText) {
       if (layer.type === 'TEXT') {
@@ -80,7 +69,14 @@ figma.ui.onmessage = async (msg) => {
         const text = textLayer.characters;
 
         try {
-          await figma.loadFontAsync(textLayer.fontName as FontName);
+          const font = {
+            family: textLayer.fontName['family'],
+            style: textLayer.fontName['style'],
+          };
+
+          // Wait for the font to be loaded before proceeding
+          await figma.loadFontAsync({family: 'Inter', style: 'Regular'});
+          await figma.loadFontAsync(font);
 
           let newTextLayer: TextNode;
 
@@ -99,12 +95,10 @@ figma.ui.onmessage = async (msg) => {
               temperature: 0.7,
             }),
           };
-          
 
           const response = await fetch(apiUrl, requestOptions);
           const data = await response.json();
           let generatedText = data.choices[0].message.content;
-          console.log('Generated Text:', generatedText)
 
           // Remove known prefixes from generated text
           const prefixesToRemove = ['Shortened text: ', 'Revised text: ', '"'];
@@ -118,7 +112,7 @@ figma.ui.onmessage = async (msg) => {
           if (textDisplay === 'Replace text') {
             newTextLayer = figma.createText();
             newTextLayer.characters = generatedText;
-            newTextLayer.fontName = textLayer.fontName;
+            newTextLayer.fontName = font;
             newTextLayer.fontSize = textLayer.fontSize;
             newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
@@ -154,12 +148,7 @@ figma.ui.onmessage = async (msg) => {
           figma.closePlugin('An error occurred');
         }
       }
-      figma.closePlugin();
     }
+    figma.closePlugin(); // Move this outside the for loop to close the plugin after processing all text nodes
   }
 };
-
-
-
-
-
