@@ -114,6 +114,7 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.characters = generatedText;
             newTextLayer.fontName = font;
             newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.lineHeight = textLayer.lineHeight;
             newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
             newTextLayer.textAutoResize = textLayer.textAutoResize;
@@ -129,6 +130,7 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.characters = generatedText;
             newTextLayer.fontName = textLayer.fontName;
             newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.lineHeight = textLayer.lineHeight;
             newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
             newTextLayer.textAutoResize = textLayer.textAutoResize;
