@@ -6,7 +6,7 @@ import { Toggler, Dropdown } from "./index"
 const Editor = () => {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [textAction, setTextAction] = useState<string>("Improve writing");
-  const [toggleOption, setToggleOption] = useState<boolean>(false);
+  const [toggleOption, setToggleOption] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
   
