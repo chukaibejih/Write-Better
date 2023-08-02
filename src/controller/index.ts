@@ -57,7 +57,7 @@ figma.ui.onmessage = async (msg) => {
   if (msg.type === 'get-selected-text') {
 
     // abort process if no text node is selected
-    if (!selectedText || selectedText.length <= 0) {
+    if (!selectedText) {
       figma.closePlugin('Select at least one frame');
       figma.ui.postMessage("");
       return;
@@ -114,6 +114,7 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.characters = generatedText;
             newTextLayer.fontName = font;
             newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.fills = textLayer.fills
             newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
             newTextLayer.textAutoResize = textLayer.textAutoResize;
@@ -129,6 +130,7 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.characters = generatedText;
             newTextLayer.fontName = textLayer.fontName;
             newTextLayer.fontSize = textLayer.fontSize;
+            newTextLayer.fills = textLayer.fills
             newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
             newTextLayer.textAutoResize = textLayer.textAutoResize;
@@ -149,6 +151,5 @@ figma.ui.onmessage = async (msg) => {
         }
       }
     }
-    figma.closePlugin(); // Move this outside the for loop to close the plugin after processing all text nodes
   }
 };
