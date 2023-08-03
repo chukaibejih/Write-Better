@@ -91,8 +91,8 @@ figma.ui.onmessage = async (msg) => {
             },
             body: JSON.stringify({
               model: 'gpt-3.5-turbo',
-              messages: [{ role: 'user', content: `Perform this action '${textAction}' on this text '${text}'` }],
-              temperature: 0.7,
+              messages: [{ role: 'user', content: `${textAction}\nText: ${text}` }],
+              temperature: 0,
             }),
           };
 
