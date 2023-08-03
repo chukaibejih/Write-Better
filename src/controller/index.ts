@@ -144,6 +144,12 @@ figma.ui.onmessage = async (msg) => {
               figma.currentPage.appendChild(newTextLayer); // Fallback to appending to the current page if parent is null
             }
 
+            figma.ui.postMessage({
+              pluginMessage: {
+                type: "",
+              },
+            });
+
           }
         } catch (error) {
           console.error('Error:', error);
@@ -151,5 +157,7 @@ figma.ui.onmessage = async (msg) => {
         }
       }
     }
+     // After the processing is completed, disable text selection
+     figma.currentPage.selection = [];
   }
 };
