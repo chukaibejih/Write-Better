@@ -152,7 +152,6 @@ figma.ui.onmessage = async (msg) => {
 
           }
         } catch (error) {
-          console.error('Error:', error);
           figma.closePlugin('An error occurred');
         }
       }

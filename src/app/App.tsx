@@ -6,8 +6,6 @@ import { Selector, Editor } from "./components";
 const App = () => {
   const [selectedText, setSelectedText] = React.useState<string>("");
  
-
-  console.log(selectedText)
   
   //onload send msg to figma to  track selection
   React.useEffect(() => {
