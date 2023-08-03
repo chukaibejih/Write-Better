@@ -27,7 +27,7 @@ const dropdownData: DropdownDataTypes[] = [
     {
         id: 4,
         icon: <LongerTextIcon />,
-        text: "Make Text longer",
+        text: "Make text longer",
     },
     {
         id: 5,

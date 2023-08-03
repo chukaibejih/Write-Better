@@ -5,7 +5,7 @@ import { Selector, Editor } from "./components";
 
 const App = () => {
   const [selectedText, setSelectedText] = React.useState<string>("");
-  //const [loading, setLoading] = React.useState<string>("")
+ 
   
   //onload send msg to figma to  track selection
   React.useEffect(() => {
@@ -53,6 +53,7 @@ const App = () => {
       </div>       
       <CancelIcon />
   </div>*/}
+
     {selectedText === "text-highlighted" ? (
        <Editor />
     ) :  (
