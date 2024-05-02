@@ -1,8 +1,8 @@
 // clear console on reload
 console.clear();
 
-// api key
-const OpenAiAPIKey = process.env.REACT_APP_OPENAI_API_KEY;
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
 
 // default plugin size
 const pluginFrameSize = {
@@ -68,6 +68,10 @@ figma.ui.onmessage = async (msg) => {
         const textLayer = layer as TextNode; // Explicitly type as TextNode
         const text = textLayer.characters;
 
+        if (textLayer.fontName["family"] === undefined || textLayer.fontName["style"] === undefined ) {
+          figma.closePlugin("Multiple font weights detected in the selected text. Ensure all texts have the same font weight.")
+        }
+
         try {
           const font = {
             family: textLayer.fontName['family'],
@@ -80,25 +84,14 @@ figma.ui.onmessage = async (msg) => {
 
           let newTextLayer: TextNode;
 
-          const apiKey = `${OpenAiAPIKey}`;
-          const apiUrl = 'https://api.openai.com/v1/chat/completions';
+          const gemini_api_key = "GEMINI_API_KEY";
+          const genAI = new GoogleGenerativeAI(gemini_api_key);
 
-          const requestOptions = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-              model: 'gpt-3.5-turbo',
-              messages: [{ role: 'user', content: `${textAction}\nText: ${text}` }],
-              temperature: 0,
-            }),
-          };
-
-          const response = await fetch(apiUrl, requestOptions);
-          const data = await response.json();
-          let generatedText = data.choices[0].message.content;
+          const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+          const prompt = `${textAction}\nText: ${text}. Strictly return only the response`;
+          const result = await model.generateContent(prompt);
+          const response = await result.response;
+          let generatedText = await response.text();
 
           // Remove known prefixes from generated text
           const prefixesToRemove = ['Shortened text: ', 'Revised text: ', '"'];
@@ -119,7 +112,7 @@ figma.ui.onmessage = async (msg) => {
             newTextLayer.lineHeight = textLayer.lineHeight;
             newTextLayer.textAlignHorizontal = textLayer.textAlignHorizontal;
             newTextLayer.textAlignVertical = textLayer.textAlignVertical;
-            newTextLayer.textAutoResize = 'HEIGHT';
+            newTextLayer.textAutoResize = "HEIGHT";
             newTextLayer.x = textLayer.x;
             newTextLayer.y = textLayer.y;
             newTextLayer.resize(textLayer.width, textLayer.height);
@@ -154,7 +147,7 @@ figma.ui.onmessage = async (msg) => {
 
           }
         } catch (error) {
-          figma.closePlugin('An error occurred');
+          figma.closePlugin(`An error occurred: ${error.message}`);
         }
       }
     }

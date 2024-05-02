@@ -1,8 +1,12 @@
 {
   "name": "Write Better",
-  "id": "1230428211642804104",
+  "id": "1267921184271822536",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui.html",
-  "editorType": ["figma"]
+  "editorType": ["figma"],
+  "networkAccess": {
+      "allowedDomains": ["*"],
+      "reasoning": "This plugin permits any domain"
+  }
 }

@@ -38,6 +38,11 @@
   resolved "https://registry.npmjs.org/@figma/plugin-typings/-/plugin-typings-1.68.0.tgz"
   integrity sha512-hT+iqf5CRRqKI7NmPdwml+Ld/mG1QM8VcZZURV2AowIy6vC3VQ2iIIT5d7ulDnQU+WzQDvaGaDAw/J5X6tQ2Ww==
 
+"@google/generative-ai@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/@google/generative-ai/-/generative-ai-0.2.1.tgz"
+  integrity sha512-gNmMFadfwi7qf/6M9gImgyGJXY1jKQ/de8vGOqgJ0PPYgQ7WwzZDavbKrIuXS2zdqZZaYtxW3EFN6aG9x5wtFw==
+
 "@jridgewell/gen-mapping@^0.3.0", "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.2"
   resolved "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz"
